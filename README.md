@@ -35,6 +35,18 @@ pip install -e .
 python -m ipykernel install --user --name=xsadcp
 ```
 
+## Creating csv and zarr
+
+start a notebook in the notebook folder and follow the documentation.
+
+## Start the application on your PC
+
+cd notebook
+panel serve ../xsadcp/app.py
+
+## set up the web app,
+Go to 
+(https://huggingface.co/spaces/SADCPVIEW/SADCP_VIEWER)[ https://huggingface.co/spaces/SADCPVIEW/SADCP_VIEWER]
 
 
 ## Credits

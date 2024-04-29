@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from datatree import open_datatree
+from xsadcp import get_range, load_csv, load_bathymetry, load_zarr, load_file, filter_df, filter_data, quiver_depth_filtered, bathy_uship_vship_bottom_depth, corsen_data, vectors_plot, fix_time, transform_netCDF, get_info, get_file_names, open_ds
+
 
 
 class SADCP_Viewer(param.Parameterized):
