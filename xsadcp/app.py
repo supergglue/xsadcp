@@ -1,15 +1,9 @@
-import numpy as np
-import pandas as pd
 import panel as pn
-import xarray as xr
 import param
 
-import hvplot.xarray
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-from datatree import open_datatree
-from xsadcp import get_range, load_csv, load_bathymetry, load_zarr, load_file, filter_df, filter_data, quiver_depth_filtered, bathy_uship_vship_bottom_depth, corsen_data, vectors_plot, fix_time, transform_netCDF, get_info, get_file_names, open_ds
+from xsadcp import load_csv, load_bathymetry, load_zarr, load_file
+from xsadcp import get_range, filter_df, filter_data
+from xsadcp import bathy_uship_vship_bottom_depth, vectors_plot
 
 
 
@@ -26,9 +20,12 @@ class SADCP_Viewer(param.Parameterized):
     """
 
     # Load data and initialize widgets
-    df = load_csv()
-    bathy = load_bathymetry()
-    tree=load_zarr()
+#    df = load_csv()
+    #bathy = load_bathymetry()
+#    tree=load_zarr()
+    df = pn.state.as_cached('df',load_csv,)
+    bathy = pn.state.as_cached('bathy',load_bathymetry)
+    tree = pn.state.as_cached('tree',load_zarr)
     file_names = df["file_name"].tolist()
     years = sorted(df["year"].unique())
 
@@ -173,7 +170,7 @@ class SADCP_Viewer(param.Parameterized):
 
 
 pn.extension("tabulator")
-pn.config.theme = 'dark'
+#pn.config.theme = 'dark'
 
 explorer = SADCP_Viewer()
 # Instantiate the SADCP_Viewer class and create a template
@@ -188,7 +185,7 @@ tabs = pn.Tabs(
 )
 
 sidebar = [
-    pn.panel('https://github.com/tinaok/xsadcp/blob/b06993eb3f9f5c8f126c1daadd6b2214f4c07fcb/EuroGO-SHIP_logo_wide_tagline_1.2.png',width=300 ),
+    pn.panel('./EuroGO-SHIP_logo_wide_tagline_1.2.png',width=300 ),
     """This application, developed in the frame of Euro Go Shop, helps to interactively visualise and download ship ADCP data.""",
     explorer.year_slider,
     explorer.file_dropdown,
