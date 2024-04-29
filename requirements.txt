@@ -1,0 +1,13 @@
+panel
+jupyter
+numpy
+fsspec
+cartopy
+cftime
+hvplot
+xarray==2024.2.0
+scipy
+matplotlib
+xarray-datatree
+zarr
+lxml

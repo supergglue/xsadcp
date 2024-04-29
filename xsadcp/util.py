@@ -20,35 +20,19 @@ def load_file(tree,selected_file):
 
 def filter_df(sorted_df,selected_file):
     # include  user_interface_url here
-    dataframe = sorted_df[sorted_df["file_name"] == selected_file].drop(
-                columns=[
-                    "file_name",
-                    "title",
-                    "Conventions",
-                    "featureType",
-                    "date_update",
-                    "ADCP_beam_angle",
-                    "ADCP_ship_angle",
-                    "middle_bin1_depth",
-                    "heading_corr",
-                    "pitch_corr",
-                    "ampli_corr",
-                    "pitch_roll_used",
-                    "date_creation",
-                    "ADCP_type",
-                    "data_type",
-                ]
-            )
-    # include  LOCAL_CDI_ID here
-    dataframe2 = sorted_df[sorted_df["file_name"] == selected_file].drop(
-                columns=[
-                    "file_name",
+    dataframe = sorted_df[sorted_df["file_name"] == selected_file][[
+                    "shipname",
                     "date_start",
                     "date_end",
-                    "ADCP_frequency(kHz)",
+                    "adcp_frequency(KiloHz)",
                     "bin_length(meter)",
                     "year",
-                ]
+                    "LOCAL_CDI_ID",
+                ]]
+    # include  LOCAL_CDI_ID here
+    dataframe2 = (
+              sorted_df[sorted_df["file_name"] == selected_file]
+               # .drop( columns=[ "file_name", "date_start", "date_end", "ADCP_frequency(kHz)", "bin_length(meter)", "year", ])
             )
     return dataframe.transpose(), dataframe2.transpose()
 
@@ -77,6 +61,7 @@ def quiver_depth_filtered(ax, ds, depth_range, scale_factor, color="blue"):
         matplotlib.quiver.Quiver: The quiver plot object.
     """
     # Filter data based on depth range
+    import cartopy.crs as ccrs
     ds = ds.sel( PROFZ=slice(depth_range[1],depth_range[0]))
 
     # Calculate mean current vectors within the selected depth range
@@ -486,18 +471,17 @@ def get_info(file_name):
 
     return dict
 
-def get_file_names(local_pc=True,files_path="/Users/todaka/data/goship/octopus_output_newprofz/*.nc"):
+def get_file_names(path="/Users/todaka/data/goship/octopus_output_newprofz/",local_pc=True):
     import os
     import glob
 
     if local_pc:
-        files_path = "/Users/lfranc/Documents/octopus_ok/output/*.nc"
-        files_path ="/Users/todaka/data/goship/octopus_output_newprofz/*.nc"
+        files_path =path+"*.nc"
         files_paths = glob.glob(files_path)
 
     else:
         fs = fsspec.filesystem("https")
-        files_path = "https://data-eurogoship.ifremer.fr/copy_seadatanet/*.nc"
+        files_path =path+"*.nc"
         files_paths = fs.glob(files_path)
 
     file_names = [os.path.basename(path) for path in files_paths]

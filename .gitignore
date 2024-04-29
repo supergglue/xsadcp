@@ -1,5 +1,6 @@
 # Data folder
 data/
+transformed_netCDF/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
