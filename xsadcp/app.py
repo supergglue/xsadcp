@@ -47,7 +47,7 @@ class SADCP_Viewer(param.Parameterized):
     bathy_checkbox = pn.widgets.Checkbox(value=False, name="Bathy Checkbox")
 
  
-    data_table = pn.widgets.Tabulator(width=400, height=200)
+    data_table = pn.widgets.Tabulator(width=400, height=250)
     metadata_table = pn.widgets.Tabulator(width=600, height=800)
     # Download button is not working : TODO
     download_button = pn.widgets.Button(name="Download", button_type="primary")
@@ -188,7 +188,7 @@ tabs = pn.Tabs(
 )
 
 sidebar = [
-    pn.panel('./EuroGO-SHIP_logo_wide_tagline_1.2.png',width=300 ),
+    pn.panel('https://github.com/tinaok/xsadcp/blob/b06993eb3f9f5c8f126c1daadd6b2214f4c07fcb/EuroGO-SHIP_logo_wide_tagline_1.2.png',width=300 ),
     """This application, developed in the frame of Euro Go Shop, helps to interactively visualise and download ship ADCP data.""",
     explorer.year_slider,
     explorer.file_dropdown,
@@ -206,7 +206,6 @@ sidebar = [
     """You can consult detailed information on this data in the metadata tab shown on the right.
        To download full dataset, please go to https://cdi.seadatanet.org/search 
       and search with LOCAL_CDI_ID indicated above.""",
-    #pn.panel('https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png', ),
 #width=10)
 ]
 
