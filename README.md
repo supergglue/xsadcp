@@ -27,11 +27,14 @@ Skeleton project created by Python Project Wizard (ppw)
 
 ## Installing
 
+```
 micromamba create -n xsadcp python==3.11
 micromamba activate xsadcp
 micromamba install --file requirements.txt
 pip install -e .
 python -m ipykernel install --user --name=xsadcp
+```
+
 
 
 ## Credits
