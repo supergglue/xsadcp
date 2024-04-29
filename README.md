@@ -41,8 +41,11 @@ start a notebook in the notebook folder and follow the documentation.
 
 ## Start the application on your PC
 
+Verify that you have data directory that you've made in the last step. 
+```
 cd notebook
 panel serve ../xsadcp/app.py
+```
 
 ## set up the web app,
 Go to 
