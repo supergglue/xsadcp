@@ -1,0 +1,46 @@
+FROM python:3.11.7
+
+WORKDIR /code
+
+# Copy the Python code from the xsadcp repository
+RUN apt-get update \
+    && apt-get install -y wget tar \
+    && wget https://github.com/SADCPVIEW/xsadcp/archive/refs/tags/0.11.tar.gz \
+    && tar -xzvf 0.11.tar.gz \
+    && mv xsadcp-0.11 xsadcp \
+    && rm 0.11.tar.gz
+    
+COPY . .    
+
+# install python softwares.  
+
+RUN python3 -m pip install --no-cache-dir --upgrade pip
+RUN python3 -m pip install --no-cache-dir --upgrade -r /code/xsadcp/requirements.txt
+RUN python3 -m pip install /code/xsadcp/.
+
+COPY . .
+
+
+WORKDIR /code/xsadcp 
+
+# Add step to download data.tar from URL and extract its contents to /data/
+RUN mkdir data \
+    && chmod 777 data \
+    && wget https://data-eurogoship.ifremer.fr/data.tar \
+    && tar -xvf data.tar -C data/ \
+    && rm data.tar \
+    && ls data/
+
+CMD ["panel", "serve", "xsadcp/app.py", "--warm", "--address", "0.0.0.0", "--port", "7860",  "--allow-websocket-origin", "*"]
+
+RUN mkdir /.cache
+RUN chmod 777 /.cache
+RUN mkdir /.config
+RUN chmod 777 /.config
+RUN mkdir .chroma
+RUN chmod 777 .chroma
+RUN mkdir /.local
+RUN chmod 777 /.local
+
+
+
